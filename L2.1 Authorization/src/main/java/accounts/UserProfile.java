@@ -8,6 +8,7 @@ package accounts;
  *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
  */
 public class UserProfile {
+
     private final String login;
     private final String pass;
     private final String email;

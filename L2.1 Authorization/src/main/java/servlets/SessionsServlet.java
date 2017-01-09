@@ -18,6 +18,7 @@ import java.io.IOException;
  *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
  */
 public class SessionsServlet extends HttpServlet {
+
     private final AccountService accountService;
 
     public SessionsServlet(AccountService accountService) {
