@@ -1,7 +1,8 @@
 package servlets;
 
 import accounts.AccountService;
-import accounts.UserProfile;
+import dbService.DBException;
+import dbService.dataSets.UserProfile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,15 +26,24 @@ public class SignInServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        if(login == null || password == null || login.isEmpty() || password.isEmpty()) {
+        if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             resp.setContentType("text/html;charset=utf-8");
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        UserProfile profile = accountService.getUserByLogin(login);
-        if(profile != null) {
-            if(password.equals(profile.getPass())) {
+        UserProfile profile = null;
+        try {
+            profile = accountService.getUserByLogin(login);
+        } catch (DBException e) {
+            resp.setContentType("text/html;charset=utf-8");
+            resp.getWriter().println(e.getMessage());
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
+
+        if (profile != null) {
+            if (password.equals(profile.getPass())) {
                 resp.setContentType("text/html;charset=utf-8");
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.getWriter().println("Authorized: " + profile.getLogin());

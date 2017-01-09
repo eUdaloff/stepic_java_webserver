@@ -1,7 +1,8 @@
 package servlets;
 
 import accounts.AccountService;
-import accounts.UserProfile;
+import dbService.DBException;
+import dbService.dataSets.UserProfile;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
@@ -32,8 +33,15 @@ public class SignUpServlet extends HttpServlet {
             return;
         }
 
-        UserProfile profile = new UserProfile(login, password, "");
-        accountService.addNewUser(profile);
+        UserProfile profile = new UserProfile(login, password);
+        try {
+            accountService.addNewUser(profile);
+        } catch (DBException e) {
+            resp.setContentType("text/html;charset=utf-8");
+            resp.getWriter().println(e.getMessage());
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
 
         Gson gson = new Gson();
         String json = gson.toJson(profile);
