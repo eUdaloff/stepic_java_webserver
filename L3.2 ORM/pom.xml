@@ -15,7 +15,6 @@
         <org.hibernate.hibernate-core.version>4.3.10.Final</org.hibernate.hibernate-core.version>
     </properties>
 
-
     <dependencies>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
