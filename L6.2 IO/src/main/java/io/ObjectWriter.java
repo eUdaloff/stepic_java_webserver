@@ -6,8 +6,9 @@ import java.io.*;
  * @author v.chibrikov
  */
 public class ObjectWriter {
+
     public static void main(String[] args) {
-        stringExample();
+        //stringExample();
         descriptorExample();
     }
 
